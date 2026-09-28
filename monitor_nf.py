@@ -8,8 +8,9 @@ import re
 import sys
 from datetime import datetime, timezone
 from html.parser import HTMLParser
+from http.cookiejar import CookieJar
 from pathlib import Path
-from urllib.request import Request, urlopen
+from urllib.request import HTTPCookieProcessor, Request, build_opener
 
 
 SOURCE_URL = (
@@ -169,7 +170,8 @@ def main() -> int:
                     "AppleWebKit/537.36 Chrome/124.0 Safari/537.36"
                 },
             )
-            with urlopen(request, timeout=25) as response:
+            opener = build_opener(HTTPCookieProcessor(CookieJar()))
+            with opener.open(request, timeout=25) as response:
                 html = response.read().decode("utf-8-sig", errors="replace")
         now = datetime.now(timezone.utc).isoformat(timespec="seconds")
         records = parse_availability(html, now)
