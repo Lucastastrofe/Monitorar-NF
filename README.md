@@ -25,3 +25,7 @@ python monitor_nf.py --html-file pagina.html --output status_servicos.csv
 `operando`, `falha_parcial` e `indisponivel` seguem as imagens exibidas pelo portal. Uma imagem não reconhecida recebe `desconhecido`, sem interpretação automática. O horário `verificado_em_fonte` é apresentado pelo portal e não indica o momento exato em que cada serviço mudou de estado.
 
 Este projeto registra o que o portal público mostra. Não substitui uma verificação direta do serviço de emissão de NF-e.
+
+## Verificação
+
+Os testes locais cobrem extração, ausência da tabela e reexecução sem duplicatas. A [execução no GitHub Actions em 28/09/2026](https://github.com/Lucastastrofe/Monitorar-NF/actions/runs/36470269210) consultou a página oficial, extraiu 14 autorizadores e guardou o CSV como artefato.
