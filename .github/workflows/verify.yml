@@ -1,0 +1,28 @@
+name: Verificar coleta NF-e
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Testes
+        run: python -m unittest discover -s tests -v
+      - name: Consulta real ao portal NF-e
+        run: python monitor_nf.py --output status_servicos.csv
+      - name: Guardar resultado da execução
+        uses: actions/upload-artifact@v4
+        with:
+          name: status-servicos-nfe
+          path: status_servicos.csv
+          retention-days: 7
