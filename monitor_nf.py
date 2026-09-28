@@ -162,7 +162,13 @@ def main() -> int:
         if args.html_file:
             html = args.html_file.read_text(encoding="utf-8-sig")
         else:
-            request = Request(SOURCE_URL, headers={"User-Agent": "Monitorar-NF/1.0"})
+            request = Request(
+                SOURCE_URL,
+                headers={
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                    "AppleWebKit/537.36 Chrome/124.0 Safari/537.36"
+                },
+            )
             with urlopen(request, timeout=25) as response:
                 html = response.read().decode("utf-8-sig", errors="replace")
         now = datetime.now(timezone.utc).isoformat(timespec="seconds")
